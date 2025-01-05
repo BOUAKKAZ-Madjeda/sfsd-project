@@ -20,7 +20,7 @@ void extract_and_sort( const char *filename ,char grp[3]);
 void logicaldeletion(const char *filename, int target_id);
 void Physical_Deletion(const char *filename, const char *Temp_file_name);
 void display_students(const char *filename);
-void display_students_from_file(const char *filename);
+
 int main()
 {
     int choice;
@@ -73,7 +73,7 @@ int main()
                 break;
             case 7:
                 printf("\tStudents: \n");
-                display_students(temp_filename);
+                display_students(filename);
                 break;
             case 8:
                 printf("\tExiting the system.\n");
@@ -519,7 +519,7 @@ void logicaldeletion(const char *filename, int target_id) {
 }
 
 void Physical_Deletion( const char *filename, const char *Temp_file_name) {
-    // Use fopen_read to open the original file for reading
+    // Open the original file for reading
     FILE *file = fopen(filename, "r");
     if (file == NULL) {
         return;
@@ -569,12 +569,13 @@ void Physical_Deletion( const char *filename, const char *Temp_file_name) {
     fclose(Temp_File);
 
     // These lines to replace the original file with the temporary file
-    //remove(filename);
-    //rename(Temp_file_name, filename);
+    remove(filename);
+    rename(Temp_file_name, filename);
     printf("Students deleted successfully.");
 }
 
-void display_students(const char *filename){
+void display_students(const char *filename)
+{
     FILE *f = fopen(filename, "r");
     if (f == NULL) {
     perror("Error opening file");
@@ -592,24 +593,3 @@ void display_students(const char *filename){
       }
     }
 }
-
-/*void display_students_from_file(const char *filename) {
-    FILE *file = fopen(filename, "r");
-    if (file == NULL) {
-        perror("Error opening file");
-        return;
-    }
-
-    char line[256];
-    int i=0;//nmber of total student
-    printf("\nContents of the file '%s':\n", filename);
-
-    // Read and display the file line by line
-    while (fgets(line, sizeof(line), file)) {
-        printf("%s", line);
-        i++;
-    }
-    printf("\n%d",i);
-    fclose(file);
-}
-*/
