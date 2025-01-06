@@ -1,7 +1,7 @@
 void modification(const char *filename, const char *temp_filename)
  {
     char line[256];
-    int fid, choice, nb, i, exist;
+    int fid, choice,i, exist;
     char module[20];
     exist=0;
     printf("Enter the ID of the student you want to modify: ");
