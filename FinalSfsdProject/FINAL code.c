@@ -8,20 +8,21 @@ typedef struct student {
   char surname[30];
   int birth_year;
   char group[3];
-  float note[4]; // Array to store grades for 4 subjects
-  float moyenne; // Average grade
-  int exist; // Flag to indicate if student is active (1) or inactive (0)
+  float note[4];
+  float moyenne;
+  int exist; // Flag to indicate if student is inactive (1) or active (0)
 } student;
 
-void add_student();
-void search_student_by_id(const char *filename, int searchid);
-void modification(const char *f, const char *ftemp);
-void extract_and_sort( const char *filename ,char grp[3]);
-void logicaldeletion(const char *filename, int target_id);
-void Physical_Deletion(const char *filename, const char *Temp_file_name);
+void add_student(); // BENTALEB Lisa
+void search_student_by_id(const char *filename, int searchid); // BOUDISSA Farouk Radouane
+void modification(const char *f, const char *ftemp); // TAYEBCHERIF Yasmine , ACHEUK Djida
+void extract_and_sort( const char *filename ,char grp[3]); // TACHEKORT Celine
+void logicaldeletion(const char *filename, int target_id); // DOKKAR Chaima
+void Physical_Deletion(const char *filename, const char *Temp_file_name); // BOUAKKAZ Madjeda
 void display_students(const char *filename);
 
-int main(){
+int main()
+{
     int choice;
     char filename[100] = "Listes_Etudiants.txt"; // Example filename
     char temp_filename[100] = "temp.txt"; // Temporary file for deletions
@@ -72,6 +73,8 @@ int main(){
                 break;
             case 7:
                 printf("\tStudents: \n");
+                display_students(temp_filename);
+                printf("\nthe origin file is :\n");
                 display_students(filename);
                 break;
             case 8:
@@ -87,6 +90,7 @@ int main(){
     return 0;
 }
 
+// Function for Id check
 int unique_id(int id) {
     FILE *f = fopen("Listes_Etudiants.txt", "r");
     if (f == NULL) {
@@ -94,7 +98,7 @@ int unique_id(int id) {
     }
 
     int existing_id;
-    while (fscanf(f, "%d", &existing_id) == 1) {
+    while (fscanf(f, "%d", &existing_id) == 1) { // We put our first integer of each line in the variable existing_id and we check it with the ID that the user input.
         if (existing_id == id) {
             fclose(f);
             return 0; // ID is not unique
@@ -220,7 +224,7 @@ void add_student() {
     // Replace the original file with the temp file
     if (remove("Listes_Etudiants.txt") != 0 || rename("temp.txt", "Listes_Etudiants.txt") != 0) {
         perror("Error replacing file");
-        return;
+//        return -1;
     }
 
     printf("Student added successfully.\n");
@@ -324,6 +328,7 @@ void modification(const char *filename, const char *temp_filename){
                         if (sfsd < 0 || sfsd > 20)
                             printf("Invalid Input, please try again: ");
                     } while (sfsd < 0 || sfsd > 20);
+
                     printf("\tPOO: ");
                     do {
                         scanf("%f", &poo);
@@ -365,12 +370,12 @@ void modification(const char *filename, const char *temp_filename){
         perror("Error replacing file");
         return;
     }
-     if(exist==1) {
+    if(exist==1){
     printf("Modification completed successfully.\n");
-     }
-    else{
-    printf("Id doesn't exist, modification not allowed \n");
-     }
+    }
+   else{
+     printf("Id doesn't exist , modification not allowed");
+   }
 }
 
 void search_student_by_id(const char *filename, int searchid) {
@@ -523,7 +528,7 @@ void logicaldeletion(const char *filename, int target_id) {
 }
 
 void Physical_Deletion( const char *filename, const char *Temp_file_name) {
-    // Open the original file for reading
+    // Use fopen_read to open the original file for reading
     FILE *file = fopen(filename, "r");
     if (file == NULL) {
         return;
@@ -575,7 +580,7 @@ void Physical_Deletion( const char *filename, const char *Temp_file_name) {
     // These lines to replace the original file with the temporary file
     remove(filename);
     rename(Temp_file_name, filename);
-    printf("Students deleted successfully.");
+    printf("\nStudents deleted successfully.\n");
 }
 
 void display_students(const char *filename){
@@ -592,7 +597,7 @@ void display_students(const char *filename){
     if (sscanf(line, "%d %s %s %d %s %f 4 %f 3 %f 2 %f 5 %f %d",
               &s.id, s.name, s.surname, &s.birth_year, s.group,
               &s.note[0], &s.note[1], &s.note[2], &s.note[3], &s.moyenne, &s.exist) == 11) {
-        printf("ID: %2d | Name: %s %s | Birth Year: %d | Group: %s | Average: %.2f | Active : %d\n", s.id, s.name, s.surname, s.birth_year,  s.group, s.moyenne, s.exist);
+        printf("ID: %d | Name: %s %s | Birth Year: %d | Group: %s | Average: %.2f | Active : %d\n", s.id, s.name, s.surname, s.birth_year,  s.group, s.moyenne, s.exist);
       }
     }
 }
