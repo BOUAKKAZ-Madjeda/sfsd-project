@@ -5,12 +5,13 @@ This project is a **Student Management System** designed for academic institutio
 ## Table of Contents
 - **I. Data Implementation**
 - **II. Functions**
-  1. Add Student
-  2. Search Student by ID
-  3. Modification
-  4. Logical Deletion
-  5. Extract and Sort
-  6. Physical Deletion
+  - 1. Add Student
+  - 2. Search Student by ID
+  - 3. Modification
+  - 4. Logical Deletion
+  - 5. Extract and Sort
+  - 6. Physical Deletion
+
 
 ---
 
